@@ -4,10 +4,12 @@
   width: 280px;
   text-align: center;
   margin-bottom: 65px;
-
-  &:not(:nth-of-type(4n)) {
-    margin-right: 35px;
+  
+  &-wrapper {
+    display: flex;
+    justify-content: center;
   }
+ 
 
   &__image {
     width: 260px;
@@ -61,7 +63,7 @@
 
   &__price {
     font-weight: bold;
-    font-size: 22px;
+    font-size: 20px;
     line-height: 27px;
     letter-spacing: 0.015em;
   }
