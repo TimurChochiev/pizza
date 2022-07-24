@@ -1,8 +1,4 @@
-import { useState } from "react";
-
-export function Categories() {
-  const [activeTab, setActiveTab] = useState(0);
-
+export function Categories(props) {
   const categories = [
     "Все",
     "Мясные",
@@ -17,8 +13,8 @@ export function Categories() {
       <ul>
         {categories.map((tab, tabNum) => (
           <li
-            onClick={() => setActiveTab(tabNum)}
-            className={activeTab === tabNum ? "active" : ""}
+            onClick={() => props.onClickCategory(tabNum)}
+            className={props.value === tabNum ? "active" : ""}
             key={tabNum}
           >
             {tab}

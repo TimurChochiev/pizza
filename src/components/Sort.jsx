@@ -1,18 +1,29 @@
 import { useState } from "react";
 
-export function Sort() {
+export function Sort(props) {
   const [sortIsOpen, setSortIsOpen] = useState(false);
-  const [sortType, setSortType] = useState(0);
 
-  const sortTypes = ["Популярности", "Цене", "Алфавиту"];
+  const sortTypes = [
+    {
+      id: 0,
+      name: "популярности (по убыванию)",
+      sort: "rating",
+      order: "desc",
+    },
+    {
+      id: 1,
+      name: "популярности (по возрастанию)",
+      sort: "rating",
+      order: "asc",
+    },
+    { id: 2, name: "цене (по убыванию)", sort: "price", order: "desc" },
+    { id: 3, name: "цене (по возрастанию)", sort: "price", order: "asc" },
+    { id: 4, name: "алфавиту (по убыванию)", sort: "title", order: "desc" },
+    { id: 5, name: "алфавиту (по возрастанию)", sort: "title", order: "asc" },
+  ];
 
   const openHandler = () => {
     setSortIsOpen(!sortIsOpen);
-  };
-
-  const popupClickHandler = (i) => {
-    setSortType(i);
-    setSortIsOpen(false);
   };
 
   return (
@@ -31,18 +42,18 @@ export function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={openHandler}>{sortTypes[sortType]}</span>
+        <span onClick={openHandler}>{props.value.name}</span>
       </div>
       {sortIsOpen && (
         <div className="sort__popup">
-          <ul>
+          <ul onClick={openHandler}>
             {sortTypes.map((el, i) => (
               <li
                 key={i}
-                onClick={() => popupClickHandler(i)}
-                className={sortType === i ? "active" : ""}
+                onClick={() => props.onClickSort(el)}
+                className={props.value.name === el.name ? "active" : ""}
               >
-                {el}
+                {el.name}
               </li>
             ))}
           </ul>
