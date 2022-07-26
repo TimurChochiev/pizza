@@ -1,8 +1,14 @@
+import { useContext } from "react";
+
+import { searchContext } from "../../App";
+
 import styles from "./Search.module.scss";
 
-export function Search(props) {
+export function Search() {
+  const { searchValue, setSearchValue } = useContext(searchContext);
+
   const inputClear = () => {
-    props.setSearchValue("");
+    setSearchValue("");
   };
 
   return (
@@ -42,12 +48,12 @@ export function Search(props) {
         />
       </svg>
       <input
-        value={props.searchValue}
-        onChange={(event) => props.setSearchValue(event.target.value)}
+        value={searchValue}
+        onChange={(event) => setSearchValue(event.target.value)}
         className={styles.input}
         placeholder="Поиск..."
       />
-      {props.searchValue && (
+      {searchValue && (
         <svg
           onClick={inputClear}
           className={styles.clear}

@@ -6,9 +6,11 @@ import { PizzaCard } from "../components/PizzaBlock";
 import { PlaceHolder } from "../components/PizzaBlock/PlaceHolder";
 import { Pagination } from "../components/Pagination/Pagination";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { searchContext } from "../App";
 
 export function Home(props) {
+  const { searchValue } = useContext(searchContext);
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,8 +28,8 @@ export function Home(props) {
         const [pizzaRes] = await Promise.all([
           axios.get(
             `https://62b9c7c041bf319d22855607.mockapi.io/pizzas?page=${currentPage}&limit=3${
-              categoryTab > 0 ? `category=${categoryTab}` : ``
-            }&sortBy=${sortType.sort}&search=${props.searchValue}&order=${
+              categoryTab > 0 ? `&category=${categoryTab}` : ``
+            }&sortBy=${sortType.sort}&search=${searchValue}&order=${
               sortType.order
             } `
           ),
@@ -41,7 +43,7 @@ export function Home(props) {
     }
     pizzaFetch();
     window.scrollTo(0, 0);
-  }, [categoryTab, sortType, props.searchValue, currentPage]);
+  }, [categoryTab, sortType, searchValue, currentPage]);
 
   const pizzasCards = pizzas.map((el) => (
     <PizzaCard
