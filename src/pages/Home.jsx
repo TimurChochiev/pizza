@@ -1,5 +1,7 @@
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
+import { setCategoryTab } from "../redux/slices/filterSlice";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { PizzaCard } from "../components/PizzaBlock";
@@ -9,17 +11,20 @@ import { Pagination } from "../components/Pagination/Pagination";
 import { useState, useEffect, useContext } from "react";
 import { searchContext } from "../App";
 
-export function Home(props) {
+export function Home() {
+  const categoryTab = useSelector((state) => state.filter.categoryTab);
+  const sortType = useSelector((state) => state.filter.sortType);
+
+  const dispatch = useDispatch();
+
   const { searchValue } = useContext(searchContext);
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [categoryTab, setCategoryTab] = useState(0);
-  const [sortType, setSortType] = useState({
-    name: "популярности (по убыванию)",
-    sort: "rating",
-    order: "desc",
-  });
+
+  const onClickCategory = (id) => {
+    dispatch(setCategoryTab(id));
+  };
 
   useEffect(() => {
     async function pizzaFetch() {
@@ -63,11 +68,8 @@ export function Home(props) {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          value={categoryTab}
-          onClickCategory={(tab) => setCategoryTab(tab)}
-        />
-        <Sort value={sortType} onClickSort={(sortId) => setSortType(sortId)} />
+        <Categories value={categoryTab} onClickCategory={onClickCategory} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
