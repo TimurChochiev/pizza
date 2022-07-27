@@ -34,7 +34,7 @@ export function Home() {
           axios.get(
             `https://62b9c7c041bf319d22855607.mockapi.io/pizzas?page=${currentPage}&limit=3${
               categoryTab > 0 ? `&category=${categoryTab}` : ``
-            }&sortBy=${sortType.sort}&search=${searchValue}&order=${
+            }&sortBy=${sortType.sortBy}&search=${searchValue}&order=${
               sortType.order
             } `
           ),

@@ -3,8 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   categoryTab: 0,
   sortType: {
-    name: "популярности (DESC)",
+    id: 0,
+    name: "популярности (по убыванию)",
     sortBy: "rating",
+    order: "desc",
   },
 };
 

@@ -4,16 +4,21 @@ import { setSortType } from "../redux/slices/filterSlice";
 
 const sortTypes = [
   {
-    name: "популярности (DESC)",
+    id: 0,
+    name: "популярности (по убыванию)",
     sortBy: "rating",
+    order: "desc",
   },
   {
-    name: "популярности (ASC)",
-    sortBy: "-rating",
+    id: 1,
+    name: "популярности (по возрастанию)",
+    sortBy: "rating",
+    order: "asc",
   },
-  { name: "цене (DESC)", sortBy: "price" },
-  { name: "цене (ASC)", sortBy: "-price" },
-  { name: "алфавиту (по возрастанию)", sortBy: "title" },
+  { id: 2, name: "цене (по убыванию)", sortBy: "price", order: "desc" },
+  { id: 3, name: "цене (по возрастанию)", sortBy: "price", order: "asc" },
+  { id: 4, name: "алфавиту (по убыванию)", sortBy: "title", order: "desc" },
+  { id: 5, name: "алфавиту (по возрастанию)", sortBy: "title", order: "asc" },
 ];
 
 export function Sort() {
