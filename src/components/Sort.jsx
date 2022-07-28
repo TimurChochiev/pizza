@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { setSortType } from "../redux/slices/filterSlice";
 
-const sortTypes = [
+export const sortTypes = [
   {
     id: 0,
     name: "популярности (по убыванию)",
@@ -24,7 +24,6 @@ const sortTypes = [
 export function Sort() {
   const dispatch = useDispatch();
   const sortType = useSelector((state) => state.filter.sortType);
-  console.log(sortType);
 
   const [sortIsOpen, setSortIsOpen] = useState(false);
 

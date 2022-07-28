@@ -1,10 +1,15 @@
 import axios from "axios";
 import qs from "qs";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { setCategoryTab, setCurrentPage } from "../redux/slices/filterSlice";
+import {
+  setCategoryTab,
+  setCurrentPage,
+  setFilters,
+} from "../redux/slices/filterSlice";
 import { Categories } from "../components/Categories";
-import { Sort } from "../components/Sort";
+import { Sort, sortTypes } from "../components/Sort";
 import { PizzaCard } from "../components/PizzaBlock";
 import { PlaceHolder } from "../components/PizzaBlock/PlaceHolder";
 import { Pagination } from "../components/Pagination/Pagination";
@@ -18,6 +23,7 @@ export function Home() {
   );
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { searchValue } = useContext(searchContext);
   const [pizzas, setPizzas] = useState([]);
@@ -53,17 +59,6 @@ export function Home() {
     }
     pizzaFetch();
     window.scrollTo(0, 0);
-  }, [categoryTab, sortType, searchValue, currentPage]);
-
-  useEffect(() => {
-    const queryString = qs.stringify({
-      sortType: sortType.sortBy,
-      order: sortType.order,
-      categoryTab,
-      currentPage,
-    });
-
-    console.log(queryString);
   }, [categoryTab, sortType, searchValue, currentPage]);
 
   const pizzasCards = pizzas.map((el) => (
