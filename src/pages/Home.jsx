@@ -1,7 +1,8 @@
 import axios from "axios";
+import qs from "qs";
 import { useSelector, useDispatch } from "react-redux";
 
-import { setCategoryTab } from "../redux/slices/filterSlice";
+import { setCategoryTab, setCurrentPage } from "../redux/slices/filterSlice";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { PizzaCard } from "../components/PizzaBlock";
@@ -12,18 +13,22 @@ import { useState, useEffect, useContext } from "react";
 import { searchContext } from "../App";
 
 export function Home() {
-  const categoryTab = useSelector((state) => state.filter.categoryTab);
-  const sortType = useSelector((state) => state.filter.sortType);
+  const { categoryTab, sortType, currentPage } = useSelector(
+    (state) => state.filter
+  );
 
   const dispatch = useDispatch();
 
   const { searchValue } = useContext(searchContext);
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
 
   const onClickCategory = (id) => {
     dispatch(setCategoryTab(id));
+  };
+
+  const onChangePage = (tabId) => {
+    dispatch(setCurrentPage(tabId));
   };
 
   useEffect(() => {
@@ -48,6 +53,17 @@ export function Home() {
     }
     pizzaFetch();
     window.scrollTo(0, 0);
+  }, [categoryTab, sortType, searchValue, currentPage]);
+
+  useEffect(() => {
+    const queryString = qs.stringify({
+      sortType: sortType.sortBy,
+      order: sortType.order,
+      categoryTab,
+      currentPage,
+    });
+
+    console.log(queryString);
   }, [categoryTab, sortType, searchValue, currentPage]);
 
   const pizzasCards = pizzas.map((el) => (
@@ -75,7 +91,7 @@ export function Home() {
       <div className="content__items">
         {isLoading ? placeHolder : pizzasCards}
       </div>
-      <Pagination onChangePage={(num) => setCurrentPage(num)} />
+      <Pagination value={currentPage} onChangePage={onChangePage} />
     </div>
   );
 }

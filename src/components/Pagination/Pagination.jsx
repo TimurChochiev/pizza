@@ -11,6 +11,7 @@ export function Pagination(props) {
       onPageChange={(event) => props.onChangePage(event.selected + 1)}
       pageRangeDisplayed={3}
       pageCount={4}
+      forcePage={props.value - 1}
       previousLabel="<"
       renderOnZeroPageCount={null}
     />
