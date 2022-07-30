@@ -1,15 +1,10 @@
 import axios from "axios";
-import qs from "qs";
-import { useNavigate } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 
-import {
-  setCategoryTab,
-  setCurrentPage,
-  setFilters,
-} from "../redux/slices/filterSlice";
+import { setCategoryTab, setCurrentPage } from "../redux/slices/filterSlice";
 import { Categories } from "../components/Categories";
-import { Sort, sortTypes } from "../components/Sort";
+import { Sort } from "../components/Sort";
 import { PizzaCard } from "../components/PizzaBlock";
 import { PlaceHolder } from "../components/PizzaBlock/PlaceHolder";
 import { Pagination } from "../components/Pagination/Pagination";
@@ -23,7 +18,6 @@ export function Home() {
   );
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { searchValue } = useContext(searchContext);
   const [pizzas, setPizzas] = useState([]);
@@ -61,16 +55,7 @@ export function Home() {
     window.scrollTo(0, 0);
   }, [categoryTab, sortType, searchValue, currentPage]);
 
-  const pizzasCards = pizzas.map((el) => (
-    <PizzaCard
-      key={el.id}
-      title={el.title}
-      price={el.price}
-      imageUrl={el.imageUrl}
-      sizes={el.sizes}
-      types={el.types}
-    />
-  ));
+  const pizzasCards = pizzas.map((el) => <PizzaCard key={el.id} {...el} />);
 
   const placeHolder = [...new Array(6)].map((_, index) => (
     <PlaceHolder key={index} />

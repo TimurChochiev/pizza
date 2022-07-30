@@ -1,19 +1,37 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-export function PizzaCard(props) {
+import { addToCart } from "../../redux/slices/cartSlice";
+
+export function PizzaCard({ id, title, price, imageUrl, sizes, types }) {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
 
+  const dispatch = useDispatch();
+
   const pizzaType = ["тонкое", "традиционное"];
+  const sizeNames = ["26", "30", "40"];
+
+  const onClickAdd = () => {
+    const pizza = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: pizzaType[activeType],
+      size: sizeNames[activeSize],
+    };
+    dispatch(addToCart(pizza));
+  };
 
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={props.imageUrl} alt="Pizza" />
-        <h4 className="pizza-block__title">{props.title}</h4>
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
-            {props.types.map((el, i) => (
+            {types.map((el, i) => (
               <li
                 onClick={() => setActiveType(i)}
                 className={activeType === i ? "active" : ""}
@@ -24,7 +42,7 @@ export function PizzaCard(props) {
             ))}
           </ul>
           <ul>
-            {props.sizes.map((el, i) => (
+            {sizes.map((el, i) => (
               <li
                 onClick={() => setActiveSize(i)}
                 className={activeSize === i ? "active" : ""}
@@ -36,8 +54,11 @@ export function PizzaCard(props) {
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {props.price} ₽</div>
-          <button className="button button--outline button--add">
+          <div className="pizza-block__price">от {price} ₽</div>
+          <button
+            onClick={onClickAdd}
+            className="button button--outline button--add"
+          >
             <svg
               width="12"
               height="12"
@@ -51,7 +72,6 @@ export function PizzaCard(props) {
               />
             </svg>
             <span>Добавить</span>
-            <i>0</i>
           </button>
         </div>
       </div>
