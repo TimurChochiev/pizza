@@ -1,25 +1,26 @@
 import { useSelector, useDispatch } from "react-redux";
 
-import { setCategoryTab, setCurrentPage } from "../redux/slices/filterSlice";
+import {
+  filterSelector,
+  setCategoryTab,
+  setCurrentPage,
+} from "../redux/slices/filterSlice";
 import { Categories } from "../components/Categories";
 import { Sort } from "../components/Sort";
 import { PizzaCard } from "../components/PizzaBlock";
 import { PlaceHolder } from "../components/PizzaBlock/PlaceHolder";
 import { Pagination } from "../components/Pagination/Pagination";
 
-import { useEffect, useContext } from "react";
-import { searchContext } from "../App";
+import { useEffect } from "react";
+
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
 
 export function Home() {
-  const { categoryTab, sortType, currentPage } = useSelector(
-    (state) => state.filter
-  );
+  const { categoryTab, sortType, currentPage, searchValue } =
+    useSelector(filterSelector);
   const { pizzas, status } = useSelector((state) => state.pizzas);
 
   const dispatch = useDispatch();
-
-  const { searchValue } = useContext(searchContext);
 
   const onClickCategory = (id) => {
     dispatch(setCategoryTab(id));
