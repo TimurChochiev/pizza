@@ -14,6 +14,7 @@ import { Pagination } from "../components/Pagination/Pagination";
 import { useEffect } from "react";
 
 import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { Link } from "react-router-dom";
 
 export function Home() {
   const { categoryTab, sortType, currentPage, searchValue } =
@@ -39,7 +40,11 @@ export function Home() {
     getPizzas();
   }, [categoryTab, sortType, searchValue, currentPage]);
 
-  const pizzasCards = pizzas.map((el) => <PizzaCard key={el.id} {...el} />);
+  const pizzasCards = pizzas.map((el) => (
+    <Link key={el.id} to={`/pizzas/${el.id}`}>
+      <PizzaCard {...el} />
+    </Link>
+  ));
 
   const placeHolder = [...new Array(6)].map((_, index) => (
     <PlaceHolder key={index} />
