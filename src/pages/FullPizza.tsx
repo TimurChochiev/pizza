@@ -2,8 +2,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-export function FullPizza() {
-  const [pizza, setPizza] = useState();
+export const FullPizza: React.FC = () => {
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
   const { id } = useParams();
 
   useEffect(() => {
@@ -21,12 +25,12 @@ export function FullPizza() {
   }, []);
 
   if (!pizza) {
-    return "Loading...";
+    return <>Loading...</>;
   }
 
   return (
     <div>
-      <img src={pizza.imageUrl} />
+      <img src={pizza.imageUrl} alt="pizza pictures" />
       <h2>{pizza.title}</h2>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia veniam
@@ -36,4 +40,4 @@ export function FullPizza() {
       </p>
     </div>
   );
-}
+};
