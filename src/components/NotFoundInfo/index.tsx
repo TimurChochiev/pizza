@@ -1,6 +1,6 @@
 import styles from "./NotFoundInfo.module.scss";
 
-export function NotFoundInfo() {
+export const NotFoundInfo: React.FC = () => {
   return (
     <div className={styles.root}>
       <h1>
@@ -11,4 +11,4 @@ export function NotFoundInfo() {
       <p className={styles.description}>Тут ничего, уходите!!</p>
     </div>
   );
-}
+};

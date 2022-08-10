@@ -10,7 +10,10 @@ export function Header() {
   const { totalPrice, pizzas } = useSelector(cartSelector);
   const { pathname } = useLocation();
 
-  const totalCount = pizzas.reduce((sum, pizzas) => sum + pizzas.count, 0);
+  const totalCount = pizzas.reduce(
+    (sum: number, pizzas: any) => sum + pizzas.count,
+    0
+  );
 
   return (
     <div className="header">

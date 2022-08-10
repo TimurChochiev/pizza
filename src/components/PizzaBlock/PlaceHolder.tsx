@@ -1,6 +1,6 @@
 import ContentLoader from "react-content-loader";
 
-export function PlaceHolder() {
+export const PlaceHolder: React.FC = () => {
   return (
     <ContentLoader
       speed={2}
@@ -18,4 +18,4 @@ export function PlaceHolder() {
       <rect x="206" y="432" rx="0" ry="0" width="0" height="1" />
     </ContentLoader>
   );
-}
+};

@@ -1,11 +1,27 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { addToCart } from "../../redux/slices/cartSlice";
 
-export function PizzaCard({ id, title, price, imageUrl, sizes, types }) {
-  const [activeType, setActiveType] = useState(0);
-  const [activeSize, setActiveSize] = useState(0);
+type PizzaCardProps = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+
+export const PizzaCard: React.FC<PizzaCardProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+}) => {
+  const [activeType, setActiveType] = useState<number>(0);
+  const [activeSize, setActiveSize] = useState<number>(0);
 
   const dispatch = useDispatch();
 
@@ -77,4 +93,4 @@ export function PizzaCard({ id, title, price, imageUrl, sizes, types }) {
       </div>
     </div>
   );
-}
+};

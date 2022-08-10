@@ -1,4 +1,9 @@
-export function Categories(props) {
+type CategoriesProps = {
+  value: number;
+  onClickCategory: any;
+};
+
+export const Categories: React.FC<CategoriesProps> = (props) => {
   const categories = [
     "Все",
     "Мясные",
@@ -23,4 +28,4 @@ export function Categories(props) {
       </ul>
     </div>
   );
-}
+};
