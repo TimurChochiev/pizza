@@ -1,5 +1,5 @@
 import { NotFoundInfo } from "../components/NotFoundInfo";
 
-export function NotFound() {
+export const NotFound: React.FC = () => {
   return <NotFoundInfo />;
-}
+};

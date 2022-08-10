@@ -13,26 +13,29 @@ import { Pagination } from "../components/Pagination/Pagination";
 
 import { useEffect } from "react";
 
-import { fetchPizzas } from "../redux/slices/pizzasSlice";
+import { fetchPizzas, pizzaSelector } from "../redux/slices/pizzasSlice";
 import { Link } from "react-router-dom";
 
-export function Home() {
+export const Home: React.FC = () => {
   const { categoryTab, sortType, currentPage, searchValue } =
     useSelector(filterSelector);
-  const { pizzas, status } = useSelector((state) => state.pizzas);
+  const { pizzas, status } = useSelector(pizzaSelector);
 
   const dispatch = useDispatch();
 
-  const onClickCategory = (id) => {
+  const onClickCategory = (id: number) => {
     dispatch(setCategoryTab(id));
   };
 
-  const onChangePage = (tabId) => {
+  const onChangePage = (tabId: number) => {
     dispatch(setCurrentPage(tabId));
   };
 
   async function getPizzas() {
-    dispatch(fetchPizzas({ categoryTab, sortType, searchValue, currentPage }));
+    dispatch(
+      // @ts-ignore
+      fetchPizzas({ categoryTab, sortType, searchValue, currentPage })
+    );
     window.scroll(0, 0);
   }
 
@@ -40,7 +43,7 @@ export function Home() {
     getPizzas();
   }, [categoryTab, sortType, searchValue, currentPage]);
 
-  const pizzasCards = pizzas.map((el) => (
+  const pizzasCards = pizzas.map((el: any) => (
     <Link key={el.id} to={`/pizzas/${el.id}`}>
       <PizzaCard {...el} />
     </Link>
@@ -63,4 +66,4 @@ export function Home() {
       <Pagination value={currentPage} onChangePage={onChangePage} />
     </div>
   );
-}
+};
