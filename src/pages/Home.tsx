@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import {
   filterSelector,
@@ -15,13 +15,14 @@ import { useEffect } from "react";
 
 import { fetchPizzas, pizzaSelector } from "../redux/slices/pizzasSlice";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../redux/store";
 
 export const Home: React.FC = () => {
   const { categoryTab, sortType, currentPage, searchValue } =
     useSelector(filterSelector);
   const { pizzas, status } = useSelector(pizzaSelector);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onClickCategory = (id: number) => {
     dispatch(setCategoryTab(id));
@@ -32,10 +33,7 @@ export const Home: React.FC = () => {
   };
 
   async function getPizzas() {
-    dispatch(
-      // @ts-ignore
-      fetchPizzas({ categoryTab, sortType, searchValue, currentPage })
-    );
+    dispatch(fetchPizzas({ categoryTab, sortType, searchValue, currentPage }));
     window.scroll(0, 0);
   }
 
@@ -43,11 +41,7 @@ export const Home: React.FC = () => {
     getPizzas();
   }, [categoryTab, sortType, searchValue, currentPage]);
 
-  const pizzasCards = pizzas.map((el: any) => (
-    <Link key={el.id} to={`/pizzas/${el.id}`}>
-      <PizzaCard {...el} />
-    </Link>
-  ));
+  const pizzasCards = pizzas.map((el: any) => <PizzaCard {...el} />);
 
   const placeHolder = [...new Array(6)].map((_, index) => (
     <PlaceHolder key={index} />

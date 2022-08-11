@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { filterSelector, setSortType } from "../redux/slices/filterSlice";
+import { setSortType, sortTypeSelector } from "../redux/slices/filterSlice";
 
 type SortTypeItem = {
   id: number;
   name: string;
-  sortBy: string;
-  order: string;
+  sortBy: "title" | "price" | "rating";
+  order: "desc" | "asc";
 };
 
 export const sortTypes: SortTypeItem[] = [
@@ -30,7 +30,7 @@ export const sortTypes: SortTypeItem[] = [
 
 export const Sort: React.FC = () => {
   const dispatch = useDispatch();
-  const sortType = useSelector(filterSelector);
+  const sortType = useSelector(sortTypeSelector);
   const sortRef = useRef<HTMLDivElement>(null);
 
   const [sortIsOpen, setSortIsOpen] = useState(false);

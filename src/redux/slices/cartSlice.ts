@@ -1,6 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-const initialState = {
+export type PizzaType = {
+  id: string;
+  title: string;
+  price: number;
+  imageUrl: string;
+  type: string;
+  size: number;
+  count: number;
+};
+
+interface CartSliceState {
+  totalPrice: number;
+  pizzas: PizzaType[];
+}
+
+const initialState: CartSliceState = {
   totalPrice: 0,
   pizzas: [],
 };
@@ -9,7 +25,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart(state, action) {
+    addToCart(state, action: PayloadAction<PizzaType>) {
       const findPizza = state.pizzas.find(
         (obj) =>
           obj.id === action.payload.id &&
@@ -27,7 +43,7 @@ const cartSlice = createSlice({
       state.totalPrice += action.payload.price;
     },
 
-    onMinus(state, action) {
+    onMinus(state, action: PayloadAction<PizzaType>) {
       const findPizza = state.pizzas.find(
         (obj) =>
           obj.id === action.payload.id &&
@@ -39,12 +55,12 @@ const cartSlice = createSlice({
       }
       state.totalPrice -= action.payload.price;
     },
-    removeFromCart(state, action) {
+    removeFromCart(state, action: PayloadAction<PizzaType>) {
       state.pizzas = state.pizzas.filter(
         (obj) =>
           obj.id !== action.payload.id &&
-          obj.types !== action.payload.types &&
-          obj.sizes !== action.payload.sizes
+          obj.type !== action.payload.type &&
+          obj.size !== action.payload.size
       );
     },
     clearCart(state) {
@@ -54,7 +70,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const cartSelector = (state) => state.cart;
+export const cartSelector = (state: RootState) => state.cart;
 
 export const { addToCart, onMinus, removeFromCart, clearCart } =
   cartSlice.actions;
