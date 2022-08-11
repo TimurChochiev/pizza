@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { filterSelector, setSortType } from "../redux/slices/filterSlice";
 
@@ -44,8 +44,11 @@ export const Sort: React.FC = () => {
   };
 
   useEffect(() => {
-    const outsideClickHandler = (event: any) => {
-      if (!event.path.includes(sortRef.current)) {
+    const outsideClickHandler = (event: MouseEvent) => {
+      const _event = event as MouseEvent & {
+        path: Node[];
+      };
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setSortIsOpen(false);
       }
     };

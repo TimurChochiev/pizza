@@ -1,6 +1,6 @@
 type CategoriesProps = {
   value: number;
-  onClickCategory: any;
+  onClickCategory: (tabNum: number) => void;
 };
 
 export const Categories: React.FC<CategoriesProps> = (props) => {
