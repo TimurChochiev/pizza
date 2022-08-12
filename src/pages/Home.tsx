@@ -11,10 +11,9 @@ import { PizzaCard } from "../components/PizzaBlock";
 import { PlaceHolder } from "../components/PizzaBlock/PlaceHolder";
 import { Pagination } from "../components/Pagination/Pagination";
 
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 import { fetchPizzas, pizzaSelector } from "../redux/slices/pizzasSlice";
-import { Link } from "react-router-dom";
 import { useAppDispatch } from "../redux/store";
 
 export const Home: React.FC = () => {
@@ -24,9 +23,9 @@ export const Home: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
-  const onClickCategory = (id: number) => {
+  const onClickCategory = useCallback((id: number) => {
     dispatch(setCategoryTab(id));
-  };
+  }, []);
 
   const onChangePage = (tabId: number) => {
     dispatch(setCurrentPage(tabId));
@@ -41,7 +40,9 @@ export const Home: React.FC = () => {
     getPizzas();
   }, [categoryTab, sortType, searchValue, currentPage]);
 
-  const pizzasCards = pizzas.map((el: any) => <PizzaCard {...el} />);
+  const pizzasCards = pizzas.map((el: any) => (
+    <PizzaCard key={el.id} {...el} />
+  ));
 
   const placeHolder = [...new Array(6)].map((_, index) => (
     <PlaceHolder key={index} />

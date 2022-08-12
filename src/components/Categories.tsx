@@ -1,18 +1,19 @@
+import { memo } from "react";
+
 type CategoriesProps = {
   value: number;
   onClickCategory: (tabNum: number) => void;
 };
+const categories = [
+  "Все",
+  "Мясные",
+  "Вегетарианские",
+  "Грилль",
+  "Острые",
+  "Закрытые",
+];
 
-export const Categories: React.FC<CategoriesProps> = (props) => {
-  const categories = [
-    "Все",
-    "Мясные",
-    "Вегетарианские",
-    "Грилль",
-    "Острые",
-    "Закрытые",
-  ];
-
+export const Categories: React.FC<CategoriesProps> = memo((props) => {
   return (
     <div className="categories">
       <ul>
@@ -28,4 +29,4 @@ export const Categories: React.FC<CategoriesProps> = (props) => {
       </ul>
     </div>
   );
-};
+});
