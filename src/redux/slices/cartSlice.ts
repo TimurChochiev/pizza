@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fillCartFromLS } from "../../utils/fillCartFromLS";
 import { RootState } from "../store";
 
 export type PizzaType = {
@@ -15,6 +16,7 @@ interface CartSliceState {
   totalPrice: number;
   pizzas: PizzaType[];
 }
+const cartData = fillCartFromLS();
 
 const initialState: CartSliceState = {
   totalPrice: 0,
