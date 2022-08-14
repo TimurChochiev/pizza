@@ -5,12 +5,13 @@ import {
   setCategoryTab,
   setCurrentPage,
 } from "../redux/slices/filterSlice";
-import { Categories } from "../components/Categories";
-import { Sort } from "../components/Sort";
-import { PizzaCard } from "../components/PizzaBlock";
-import { PlaceHolder } from "../components/PizzaBlock/PlaceHolder";
-import { Pagination } from "../components/Pagination/Pagination";
-
+import {
+  Categories,
+  Sort,
+  PizzaCard,
+  PlaceHolder,
+  Pagination,
+} from "../components";
 import { useCallback, useEffect } from "react";
 
 import { fetchPizzas, pizzaSelector } from "../redux/slices/pizzasSlice";
